@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import com.android.geolo.editdialog.lib.EditDialogLayout;
 import com.android.geolo.editdialog.lib.EditDialogText;
+import com.android.geolo.editdialog.lib.IEditDialogTextInitCallBack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,14 @@ public class MainActivity extends AppCompatActivity {
     private void setOneEdit() {
         mOneEdit = (EditDialogLayout) findViewById(R.id.one_edittext);
         if (mOneEdit != null) {
-            mOneEdit.setDefaultEdittext(MyEdittext.class);
+            mOneEdit.setDefaultEdittext(MyEdittext.class, new IEditDialogTextInitCallBack<MyEdittext>() {
+                @Override
+                public void onEditTextInit(MyEdittext editDialogText) {
+                    if (editDialogText != null) {
+                        editDialogText.setSuffix("abcdefg");
+                    }
+                }
+            });
         }
     }
 

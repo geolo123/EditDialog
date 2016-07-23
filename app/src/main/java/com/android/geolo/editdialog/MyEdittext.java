@@ -10,22 +10,25 @@ import android.text.style.ForegroundColorSpan;
 import com.android.geolo.editdialog.lib.EditDialogText;
 
 public class MyEdittext extends EditDialogText {
+    private String mSuffix;
+
     public MyEdittext(Context context) {
         super(context);
     }
 
+    public void setSuffix(String suffix) {
+        mSuffix = suffix;
+    }
+
     @Override
-    public Editable getEditDialogText() {
-        Editable editable = super.getText();
-        String content = editable.toString();
-        editable.clear();
-        editable.append(getColorText(content));
-        return editable;
+    public CharSequence getEditDialogText() {
+        String content = super.getText().toString() + mSuffix;
+        return getColorText(content);
     }
 
     SpannableString getColorText(String orgString) {
         SpannableString msp = new SpannableString(orgString);
-        msp.setSpan(new ForegroundColorSpan(Color.parseColor("#67d470")), 0, orgString.length(),
+        msp.setSpan(new ForegroundColorSpan(Color.parseColor("#67d470")), 0, orgString.indexOf(mSuffix),
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // 设置前景色为洋红色
         return msp;
     }

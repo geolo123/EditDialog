@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 /**
- * ±à¼­Ìõ²¼¾ÖÔªËØ£¬µã»÷¶¼ÊÇ¶Ô»°¿ò
+ * ç¼–è¾‘æ¡å¸ƒå±€å…ƒç´ ï¼Œç‚¹å‡»éƒ½æ˜¯å¯¹è¯æ¡†
  * Created by geolo on 2016/7/19.
  */
 public class EditDialogLayout extends LinearLayout implements View.OnClickListener {
@@ -65,12 +65,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private int mDrawablePadding = 0;
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
-    // ÎÄ±¾¸ñÊ½»¯×ÊÔ´
+    // æ–‡æœ¬æ ¼å¼åŒ–èµ„æº
     private int mValueFormatResID;
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
     private EditDialogText mUserEditText;
+    private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
 
     private void init() {
         inflate(getContext(), R.layout.edit_dialog_layout, this);
@@ -200,6 +201,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             mUserEditText = new EditDialogText(getContext());
         }
         mUserEditText.setInputType(mDialogEditInputType);
+        if (mIEditDialogTextInitCallBack != null) {
+            mIEditDialogTextInitCallBack.onEditTextInit(mUserEditText);
+        }
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -306,7 +310,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     private void showDateDialog() {
         final DatePicker picker = new DatePicker(getContext());
-        picker.setCalendarViewShown(false);// ²»ÏÔÊ¾ÈÕÀú²¿·Ö,Ö»ÏÔÊ¾ÈÕÆÚ×ªÅÌ²¿·Ö
+        picker.setCalendarViewShown(false);// ä¸æ˜¾ç¤ºæ—¥å†éƒ¨åˆ†,åªæ˜¾ç¤ºæ—¥æœŸè½¬ç›˜éƒ¨åˆ†
         String content = mValueTV.getText().toString();
         if (!TextUtils.isEmpty(content) && content.length() >= 10) {
             int year = Integer.valueOf(content.substring(0, 4));
@@ -342,21 +346,21 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_LIST_ITEM} ÀàĞÍÏÂ
+     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_LIST_ITEM} ç±»å‹ä¸‹
      */
     public void setList(@NonNull ArrayList<CharSequence> stringList) {
         if (mCurrentType != TYPE_LIST_ITEM) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_LIST_ITEM");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_LIST_ITEM");
         }
         mDialogList = stringList;
     }
 
     /**
-     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_ARRAY_ITEM} ÀàĞÍÏÂ
+     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_ARRAY_ITEM} ç±»å‹ä¸‹
      */
     public void setList(@NonNull CharSequence[] stringArray) {
         if (mCurrentType != TYPE_ARRAY_ITEM) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_ARRAY_ITEM");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_ARRAY_ITEM");
         }
         mDialogArray = stringArray;
     }
@@ -378,20 +382,22 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * ÉèÖÃÎÄ±¾¸ñÊ½»¯£¬ÔÚ {@link #TYPE_EDIT} ÀàĞÍÏÂ
+     * è®¾ç½®æ–‡æœ¬æ ¼å¼åŒ–ï¼Œåœ¨ {@link #TYPE_EDIT} ç±»å‹ä¸‹
      */
     public void setValueFormatRes(@StringRes int formatRes) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
         }
         mValueFormatResID = formatRes;
     }
 
-    public void setDefaultEdittext(Class<? extends EditDialogText> defaultClass) {
+    public <T extends EditDialogText> void setDefaultEdittext(Class<T> defaultClass,
+        IEditDialogTextInitCallBack<T> callBack) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
         }
         mUserEditTextClass = defaultClass;
+        mIEditDialogTextInitCallBack = callBack;
     }
 
     /*********************************************************************************/

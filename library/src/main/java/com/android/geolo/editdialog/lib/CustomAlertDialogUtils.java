@@ -9,14 +9,14 @@ import android.view.View;
  * Created by jwb.geolo on 2016/1/15.
  */
 public class CustomAlertDialogUtils {
-    // ---------------- start ÆÕÍ¨¶Ô»°¿ò start -----------------------//
+    // ---------------- start æ™®é€šå¯¹è¯æ¡† start -----------------------//
     /**
-     * µ¯³öÓĞÖ»ÓĞÃ»ÓĞ°´Å¥µÄ¶Ô»°¿ò
+     * å¼¹å‡ºæœ‰åªæœ‰æ²¡æœ‰æŒ‰é’®çš„å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param msg                    ÄÚÈİ
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param msg                    å†…å®¹
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, String msg,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
@@ -29,14 +29,14 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * µ¯³öÓĞÖ»ÓĞÒ»¸ö°´Å¥µÄ¶Ô»°¿ò
+     * å¼¹å‡ºæœ‰åªæœ‰ä¸€ä¸ªæŒ‰é’®çš„å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param msg                    ÄÚÈİ
-     * @param positiveButtonText     °´Å¥µÄÎÄ°¸
-     * @param positiveButtonListener °´Å¥µÄÏàÓ¦ÊÂ¼ş
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param msg                    å†…å®¹
+     * @param positiveButtonText     æŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param positiveButtonListener æŒ‰é’®çš„ç›¸åº”äº‹ä»¶
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, String msg, String positiveButtonText,
         DialogInterface.OnClickListener positiveButtonListener, DialogInterface.OnDismissListener onDismissListener,
@@ -51,16 +51,16 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * µ¯³öÓĞÁ½¸ö°´Å¥µÄ¶Ô»°¿ò
+     * å¼¹å‡ºæœ‰ä¸¤ä¸ªæŒ‰é’®çš„å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param msg                    ÄÚÈİ
-     * @param positiveButtonText     ¿Ï¶¨°´Å¥µÄÎÄ°¸
-     * @param positiveButtonListener ¿Ï¶¨°´Å¥µÄÏàÓ¦ÊÂ¼ş
-     * @param negativeButtonText     ·ñ¶¨°´Å¥µÄÎÄ°¸
-     * @param negativeButtonListener ·ñ¶¨°´Å¥µÄÎÄ°¸
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param msg                    å†…å®¹
+     * @param positiveButtonText     è‚¯å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param positiveButtonListener è‚¯å®šæŒ‰é’®çš„ç›¸åº”äº‹ä»¶
+     * @param negativeButtonText     å¦å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param negativeButtonListener å¦å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, String msg, String positiveButtonText,
         DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
@@ -76,20 +76,20 @@ public class CustomAlertDialogUtils {
         return customBuilder.create();
     }
 
-    // ---------------- end ÆÕÍ¨¶Ô»°¿ò end -----------------------//
+    // ---------------- end æ™®é€šå¯¹è¯æ¡† end -----------------------//
 
-    // ---------------- start ×Ô¶¨Òå²¼¾Ö¶Ô»°¿ò start -----------------------//
+    // ---------------- start è‡ªå®šä¹‰å¸ƒå±€å¯¹è¯æ¡† start -----------------------//
     /**
-     * µ¯³öÓĞÁ½¸ö°´Å¥µÄ×Ô¶¨Òå²¼¾Ö¶Ô»°¿ò
+     * å¼¹å‡ºæœ‰ä¸¤ä¸ªæŒ‰é’®çš„è‡ªå®šä¹‰å¸ƒå±€å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param view                   ÄÚÈİ
-     * @param positiveButtonText     ¿Ï¶¨°´Å¥µÄÎÄ°¸
-     * @param positiveButtonListener ¿Ï¶¨°´Å¥µÄÏàÓ¦ÊÂ¼ş
-     * @param negativeButtonText     ·ñ¶¨°´Å¥µÄÎÄ°¸
-     * @param negativeButtonListener ·ñ¶¨°´Å¥µÄÎÄ°¸
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param view                   å†…å®¹
+     * @param positiveButtonText     è‚¯å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param positiveButtonListener è‚¯å®šæŒ‰é’®çš„ç›¸åº”äº‹ä»¶
+     * @param negativeButtonText     å¦å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param negativeButtonListener å¦å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, View view, String positiveButtonText,
         DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
@@ -106,14 +106,14 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * µ¯³öÓĞÒ»¸ö°´Å¥µÄ×Ô¶¨Òå²¼¾Ö¶Ô»°¿ò
+     * å¼¹å‡ºæœ‰ä¸€ä¸ªæŒ‰é’®çš„è‡ªå®šä¹‰å¸ƒå±€å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param view                   ÄÚÈİ
-     * @param positiveButtonText     ¿Ï¶¨°´Å¥µÄÎÄ°¸
-     * @param positiveButtonListener ¿Ï¶¨°´Å¥µÄÏàÓ¦ÊÂ¼ş
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param view                   å†…å®¹
+     * @param positiveButtonText     è‚¯å®šæŒ‰é’®çš„æ–‡æ¡ˆ
+     * @param positiveButtonListener è‚¯å®šæŒ‰é’®çš„ç›¸åº”äº‹ä»¶
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, View view, String positiveButtonText,
         DialogInterface.OnClickListener positiveButtonListener, DialogInterface.OnDismissListener onDismissListener,
@@ -128,12 +128,12 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * µ¯³öÃ»ÓĞ°´Å¥µÄ×Ô¶¨Òå²¼¾Ö¶Ô»°¿ò
+     * å¼¹å‡ºæ²¡æœ‰æŒ‰é’®çš„è‡ªå®šä¹‰å¸ƒå±€å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param view                  ÄÚÈİ
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param view                  å†…å®¹
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, View view,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
@@ -145,17 +145,17 @@ public class CustomAlertDialogUtils {
         return customBuilder.create();
     }
 
-    // ---------------- end ×Ô¶¨Òå²¼¾Ö¶Ô»°¿ò end -----------------------//
+    // ---------------- end è‡ªå®šä¹‰å¸ƒå±€å¯¹è¯æ¡† end -----------------------//
 
-    // ---------------- start ÁĞ±í¶Ô»°¿ò start -----------------------//
+    // ---------------- start åˆ—è¡¨å¯¹è¯æ¡† start -----------------------//
     /**
-     * µ¯³öÃ»ÓĞ°´Å¥µÄÁĞ±í¶Ô»°¿ò
+     * å¼¹å‡ºæ²¡æœ‰æŒ‰é’®çš„åˆ—è¡¨å¯¹è¯æ¡†
      *
-     * @param title                  ±êÌâ
-     * @param items                  ÄÚÈİ
-     * @param listItemClickListener  µã»÷µÄÔªËØ
-     * @param onDismissListener      ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                  æ ‡é¢˜
+     * @param items                  å†…å®¹
+     * @param listItemClickListener  ç‚¹å‡»çš„å…ƒç´ 
+     * @param onDismissListener      å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
         DialogInterface.OnClickListener listItemClickListener, DialogInterface.OnDismissListener onDismissListener,
@@ -169,13 +169,13 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * µ¯³öÖ»ÓĞÒ»¸ö°´Å¥µÄÁĞ±í¶Ô»°¿ò
+     * å¼¹å‡ºåªæœ‰ä¸€ä¸ªæŒ‰é’®çš„åˆ—è¡¨å¯¹è¯æ¡†
      *
-     * @param title                        ±êÌâ
-     * @param items                        ÄÚÈİ
-     * @param listItemClickListener      µã»÷µÄÔªËØ
-     * @param onDismissListener            ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside       ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                        æ ‡é¢˜
+     * @param items                        å†…å®¹
+     * @param listItemClickListener      ç‚¹å‡»çš„å…ƒç´ 
+     * @param onDismissListener            å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside       æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
         String negativeButtonText, DialogInterface.OnClickListener negativeButtonListener,
@@ -190,15 +190,15 @@ public class CustomAlertDialogUtils {
         return customBuilder.create();
     }
 
-    // ---------------- end ÁĞ±í¶Ô»°¿ò end -----------------------//
+    // ---------------- end åˆ—è¡¨å¯¹è¯æ¡† end -----------------------//
     /**
-     * µ¯³öÃ»ÓĞ°´Å¥µÄÁĞ±í¶àÑ¡¶Ô»°¿ò
+     * å¼¹å‡ºæ²¡æœ‰æŒ‰é’®çš„åˆ—è¡¨å¤šé€‰å¯¹è¯æ¡†
      *
-     * @param title                        ±êÌâ
-     * @param items                        ÄÚÈİ
-     * @param listMultiChoiceClickListener µã»÷µÄCheckBoxÔªËØ
-     * @param onDismissListener            ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside       ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param title                        æ ‡é¢˜
+     * @param items                        å†…å®¹
+     * @param listMultiChoiceClickListener ç‚¹å‡»çš„CheckBoxå…ƒç´ 
+     * @param onDismissListener            å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside       æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      */
     public static Dialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
         DialogInterface.OnMultiChoiceClickListener listMultiChoiceClickListener,
@@ -212,14 +212,14 @@ public class CustomAlertDialogUtils {
     }
 
     /**
-     * ´´½¨Ã»ÓĞ°´Å¥µÄ¶àÑ¡Ôñ¶Ô»°¿ò£¬¿ÉÒÔÉèÖÃÊÇ·ñÒÑ¾­Ñ¡ÔñÏî
+     * åˆ›å»ºæ²¡æœ‰æŒ‰é’®çš„å¤šé€‰æ‹©å¯¹è¯æ¡†ï¼Œå¯ä»¥è®¾ç½®æ˜¯å¦å·²ç»é€‰æ‹©é¡¹
      * @param context
      * @param title
      * @param items
      * @param booleans
-     * @param listMultiChoiceClickListener µã»÷µÄCheckBoxÔªËØ
-     * @param onDismissListener ¶Ô»°¿òÏûÊ§µÄ¼àÌıÆ÷
-     * @param canceledOnTouchOutside   ÊÇ·ñµã»÷Íâ²¿È¡Ïû£¬ÈôÎªfalse£¬Í¬Ê±½ûÓÃ·µ»Ø¼ü
+     * @param listMultiChoiceClickListener ç‚¹å‡»çš„CheckBoxå…ƒç´ 
+     * @param onDismissListener å¯¹è¯æ¡†æ¶ˆå¤±çš„ç›‘å¬å™¨
+     * @param canceledOnTouchOutside   æ˜¯å¦ç‚¹å‡»å¤–éƒ¨å–æ¶ˆï¼Œè‹¥ä¸ºfalseï¼ŒåŒæ—¶ç¦ç”¨è¿”å›é”®
      * @return
      */
     public static Dialog createCustomAlertDialog(Context context, String title, CharSequence[] items,

@@ -14,7 +14,7 @@ public class EditDialogText extends EditText {
         return super.getText();
     }
 
-    public Editable getEditDialogText() {
+    public CharSequence getEditDialogText() {
         return getText();
     }
 
