@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="edit_dialog_layout">
+        /** 对话框的类型 */
+        <attr name="geo_style" format="enum">
+            <enum name="text" value="0" />
+            <enum name="edit" value="1" />
+            <enum name="list_item" value="2" />
+            <enum name="array_item" value="3" />
+            <enum name="time" value="4" />
+            <enum name="date" value="5" />
+            <enum name="date_time" value="6" />
+        </attr>
+        <attr name="geo_key_text_size" format="dimension" />
+        <attr name="geo_key_text_color" format="color" />
+        <attr name="geo_key_hint_color" format="color" />
+        <attr name="geo_value_text_size" format="dimension" />
+        <attr name="geo_value_text_color" format="color" />
+        <attr name="geo_value_hint_color" format="color" />
+        <attr name="geo_key_txt" format="string" />
+        <attr name="geo_key_visibility" format="boolean" />
+        <attr name="geo_value_txt" format="string" />
+        <attr name="geo_value_hint" format="string" />
+        <attr name="geo_value_visibility" format="boolean" />
+        /** 如果KEY,VALUE没有隐藏，就设置在key左边，如果key隐藏，就设置在value左边 */
+        <attr name="geo_drawableLeft" format="reference" />
+        /** 如果KEY,VALUE没有隐藏，就设置在value右边，如果 value 隐藏，就设置在 key 右边 */
+        <attr name="geo_drawableRight" format="reference" />
+        <attr name="geo_drawablePadding" format="dimension" />
+        <attr name="geo_dialog_title" format="string" />
+        <attr name="geo_dialog_msg" format="string" />
+        <attr name="geo_dialog_ok" format="string" />
+        <attr name="geo_dialog_no" format="string" />
+        <attr name="geo_dialog_button_style" format="enum">
+            <enum name="none" value="0" />
+            <enum name="single" value="1" />
+            <enum name="two" value="2" />
+        </attr>
+        <attr name="geo_dialog_array" format="reference" />
+
+        <attr name="geo_dialog_edit_inputType">
+            <flag name="none" value="0x00000000" />
+            <flag name="text" value="0x00000001" />
+            <flag name="textCapCharacters" value="0x00001001" />
+            <flag name="textCapWords" value="0x00002001" />
+            <flag name="textCapSentences" value="0x00004001" />
+            <flag name="textAutoCorrect" value="0x00008001" />
+            <flag name="textAutoComplete" value="0x00010001" />
+            <flag name="textMultiLine" value="0x00020001" />
+            <flag name="textImeMultiLine" value="0x00040001" />
+            <flag name="textNoSuggestions" value="0x00080001" />
+            <flag name="textUri" value="0x00000011" />
+            <flag name="textEmailAddress" value="0x00000021" />
+            <flag name="textEmailSubject" value="0x00000031" />
+            <flag name="textShortMessage" value="0x00000041" />
+            <flag name="textLongMessage" value="0x00000051" />
+            <flag name="textPersonName" value="0x00000061" />
+            <flag name="textPostalAddress" value="0x00000071" />
+            <flag name="textPassword" value="0x00000081" />
+            <flag name="textVisiblePassword" value="0x00000091" />
+            <flag name="textWebEditText" value="0x000000a1" />
+            <flag name="textFilter" value="0x000000b1" />
+            <flag name="textPhonetic" value="0x000000c1" />
+            <flag name="textWebEmailAddress" value="0x000000d1" />
+            <flag name="textWebPassword" value="0x000000e1" />
+            <flag name="number" value="0x00000002" />
+            <flag name="numberSigned" value="0x00001002" />
+            <flag name="numberDecimal" value="0x00002002" />
+            <flag name="numberPassword" value="0x00000012" />
+            <flag name="phone" value="0x00000003" />
+            <flag name="datetime" value="0x00000004" />
+            <flag name="date" value="0x00000014" />
+            <flag name="time" value="0x00000024" />
+        </attr>
+    </declare-styleable>
+</resources>
