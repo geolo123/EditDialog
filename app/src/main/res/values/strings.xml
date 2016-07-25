@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">EditDialog</string>
+    <string-array name="array_string">
+        <item>array 01</item>
+        <item>array 02</item>
+        <item>array 03</item>
+        <item>array 04</item>
+        <item>array 05</item>
+        <item>array 06</item>
+        <item>array 07</item>
+        <item>array 08</item>
+    </string-array>
 </resources>

@@ -169,9 +169,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                 mDialogBtnNo, null, null, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk, null,
-                null, false);
+                null, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, null, false);
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, null, false).show();
         }
     }
 

@@ -14,17 +14,24 @@ import android.widget.EditText;
 
 import com.android.geolo.editdialog.lib.EditDialogLayout;
 import com.android.geolo.editdialog.lib.EditDialogText;
+import com.android.geolo.editdialog.lib.IEditDialogDataTimeCallBack;
 import com.android.geolo.editdialog.lib.IEditDialogTextInitCallBack;
 
 public class MainActivity extends AppCompatActivity {
 
     EditDialogLayout mOneEdit;
+    EditDialogLayout mOneDate;
+    EditDialogLayout mOneTime;
+    EditDialogLayout mOneArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setOneEdit();
+        setOneDate();
+        setOneTime();
+        setOneArray();
     }
 
     private void setOneEdit() {
@@ -39,6 +46,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void setOneDate() {
+        mOneDate = (EditDialogLayout) findViewById(R.id.one_datetext);
+        mOneDate.setIEditDialogDataTimeCallBack(new IEditDialogDataTimeCallBack() {
+            @Override
+            public CharSequence onDateTimeChecked(int year, int month, int day, int hour, int minte, int second) {
+                return year + ":" + month + ":" + day;
+            }
+        });
+    }
+
+    private void setOneTime() {
+        mOneTime = (EditDialogLayout) findViewById(R.id.one_timetext);
+        mOneTime.setIEditDialogDataTimeCallBack(new IEditDialogDataTimeCallBack() {
+            @Override
+            public CharSequence onDateTimeChecked(int year, int month, int day, int hour, int minte, int second) {
+                return hour + ":" + minte + ":" + second;
+            }
+        });
+    }
+
+    private void setOneArray() {
+        mOneArray = (EditDialogLayout) findViewById(R.id.one_arraytext);
+
     }
 
 }
