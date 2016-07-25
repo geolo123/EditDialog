@@ -19,7 +19,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,13 +64,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private int mDrawablePadding = 0;
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
-    // 文本格式化资源
-    private int mValueFormatResID;
+    private int mValueFormatResID;// 文本格式化资源
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
     private EditDialogText mUserEditText;
     private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
+    private IEditDialogDataTimeCallBack mIEditDialogDataTimeCallBack;
 
     private void init() {
         inflate(getContext(), R.layout.edit_dialog_layout, this);
@@ -135,6 +134,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        if (ProcessUtil.isProcessing(300)) {
+            return;
+        }
         switch (mCurrentType) {
             default:
             case TYPE_TEXT:
@@ -286,15 +288,20 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         final TimePicker picker = new TimePicker((getContext()));
         String content = mValueTV.getText().toString();
         picker.setIs24HourView(true);
+        Calendar calendar = Calendar.getInstance();
         int hour = 0;
         int minute = 0;
+        final int currentHour = calendar.get(Calendar.HOUR);
+        final int currentMinute = calendar.get(Calendar.MINUTE);
+        final int currentYear = calendar.get(Calendar.YEAR);
+        final int currentMonthOfYear = calendar.get(Calendar.MONTH);
+        final int currentDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         if (!TextUtils.isEmpty(content) && content.length() >= 10) {
             hour = Integer.valueOf(content.substring(0, 2));
             minute = Integer.valueOf(content.substring(3, 5)) - 1;
         } else {
-            Calendar calendar = Calendar.getInstance();
-            hour = calendar.get(Calendar.HOUR);
-            minute = calendar.get(Calendar.MINUTE);
+            hour = currentHour;
+            minute = currentMinute;
         }
         picker.setCurrentHour(hour);
         picker.setCurrentMinute(minute);
@@ -302,8 +309,15 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    String currentTime = getTimeFormat(picker.getCurrentHour(), picker.getCurrentMinute());
-                    mValueTV.setText(currentTime);
+                    int checkedHour = picker.getCurrentHour();
+                    int checkedMinute = picker.getCurrentMinute();
+                    if (mIEditDialogDataTimeCallBack != null) {
+                        mValueTV.setText(mIEditDialogDataTimeCallBack.onDateTimeChecked(currentYear,
+                            currentMonthOfYear, currentDayOfMonth, checkedHour, checkedMinute, 0));
+                    } else {
+                        String checkedTime = getTimeFormat(checkedHour, checkedMinute);
+                        mValueTV.setText(checkedTime);
+                    }
                 }
             }, true).show();
     }
@@ -312,13 +326,15 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         final DatePicker picker = new DatePicker(getContext());
         picker.setCalendarViewShown(false);// 不显示日历部分,只显示日期转盘部分
         String content = mValueTV.getText().toString();
+        Calendar calendar = Calendar.getInstance();
+        final int currentHour = calendar.get(Calendar.HOUR);
+        final int currentMinute = calendar.get(Calendar.MINUTE);
         if (!TextUtils.isEmpty(content) && content.length() >= 10) {
             int year = Integer.valueOf(content.substring(0, 4));
             int month = Integer.valueOf(content.substring(5, 7)) - 1;
             int day = Integer.valueOf(content.substring(8, 10));
             picker.init(year, month, day, null);
         } else {
-            Calendar calendar = Calendar.getInstance();
             int mTodayYear = calendar.get(Calendar.YEAR);
             int mTodayMonthOfYear = calendar.get(Calendar.MONTH);
             int mTodayDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -326,14 +342,21 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         }
 
         CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, picker, mDialogBtnOk, null,
-
-        new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                String currentDate = getDateFormat(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
-                mValueTV.setText(currentDate);
-            }
-        }, true).show();
+            new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    int checkedYear = picker.getYear();
+                    int checkedMonth = picker.getMonth();
+                    int checkedDay = picker.getDayOfMonth();
+                    if (mIEditDialogDataTimeCallBack != null) {
+                        mValueTV.setText(mIEditDialogDataTimeCallBack.onDateTimeChecked(checkedYear, checkedMonth,
+                            checkedDay, currentHour, currentMinute, 0));
+                    } else {
+                        String currentDate = getDateFormat(checkedYear, checkedMonth, checkedDay);
+                        mValueTV.setText(currentDate);
+                    }
+                }
+            }, true).show();
     }
 
     private String getTimeFormat(int hour, int minute) {
@@ -391,6 +414,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         mValueFormatResID = formatRes;
     }
 
+    /**
+     * 设置自定义的输入型对话框，在 {@link #TYPE_EDIT} 类型下
+     */
     public <T extends EditDialogText> void setDefaultEdittext(Class<T> defaultClass,
         IEditDialogTextInitCallBack<T> callBack) {
         if (mCurrentType != TYPE_EDIT) {
@@ -398,6 +424,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         }
         mUserEditTextClass = defaultClass;
         mIEditDialogTextInitCallBack = callBack;
+    }
+
+    public void setIEditDialogDataTimeCallBack(IEditDialogDataTimeCallBack callBack) {
+        if (mCurrentType != TYPE_TIME && mCurrentType != TYPE_DATE && mCurrentType != TYPE_DATE_TIME) {
+            throw new RuntimeException("当前类型不是 TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
+        }
+        mIEditDialogDataTimeCallBack = callBack;
     }
 
     /*********************************************************************************/

@@ -2,7 +2,15 @@
 <resources>
 
     <declare-styleable name="edit_dialog_layout">
-        /** 对话框的类型 */
+        /** geo_style 对话框的类型
+        text ： 简单的文本提示类型
+        edit ： 可编辑输入框类型
+        list_item：ArrayList的列表元素类型
+        array_item：字符串array的列表元素类型
+        time：选择时间框类型
+        date：选择日期框类型
+        date_time：选择时间日期同框类型
+        */
         <attr name="geo_style" format="enum">
             <enum name="text" value="0" />
             <enum name="edit" value="1" />
@@ -12,33 +20,45 @@
             <enum name="date" value="5" />
             <enum name="date_time" value="6" />
         </attr>
+
         <attr name="geo_key_text_size" format="dimension" />
         <attr name="geo_key_text_color" format="color" />
         <attr name="geo_key_hint_color" format="color" />
+        <attr name="geo_key_txt" format="string" />
+        <attr name="geo_key_visibility" format="boolean" />
+
         <attr name="geo_value_text_size" format="dimension" />
         <attr name="geo_value_text_color" format="color" />
         <attr name="geo_value_hint_color" format="color" />
-        <attr name="geo_key_txt" format="string" />
-        <attr name="geo_key_visibility" format="boolean" />
         <attr name="geo_value_txt" format="string" />
         <attr name="geo_value_hint" format="string" />
         <attr name="geo_value_visibility" format="boolean" />
-        /** 如果KEY,VALUE没有隐藏，就设置在key左边，如果key隐藏，就设置在value左边 */
+
+        /** geo_drawableLeft 如果KEY,VALUE没有隐藏，就设置在key左边，如果key隐藏，就设置在value左边 */
         <attr name="geo_drawableLeft" format="reference" />
-        /** 如果KEY,VALUE没有隐藏，就设置在value右边，如果 value 隐藏，就设置在 key 右边 */
+
+        /** geo_drawableRight 如果KEY,VALUE没有隐藏，就设置在value右边，如果 value 隐藏，就设置在 key 右边 */
         <attr name="geo_drawableRight" format="reference" />
+
+        /**geo_drawablePadding 参考drawablePadding **/
         <attr name="geo_drawablePadding" format="dimension" />
+
         <attr name="geo_dialog_title" format="string" />
         <attr name="geo_dialog_msg" format="string" />
         <attr name="geo_dialog_ok" format="string" />
         <attr name="geo_dialog_no" format="string" />
+
+        /** geo_dialog_array 设置列表对话框的元素，geo_style必须为array_item */
+        <attr name="geo_dialog_array" format="reference" />
+
+        /** 设置按钮的数量 */
         <attr name="geo_dialog_button_style" format="enum">
             <enum name="none" value="0" />
             <enum name="single" value="1" />
             <enum name="two" value="2" />
         </attr>
-        <attr name="geo_dialog_array" format="reference" />
 
+        /** geo_dialog_edit_inputType ,参考TextView的inputType属性 **/
         <attr name="geo_dialog_edit_inputType">
             <flag name="none" value="0x00000000" />
             <flag name="text" value="0x00000001" />
