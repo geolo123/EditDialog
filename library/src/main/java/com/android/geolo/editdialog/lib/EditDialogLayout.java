@@ -71,6 +71,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private EditDialogText mUserEditText;
     private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
     private IEditDialogDataTimeCallBack mIEditDialogDataTimeCallBack;
+    private DialogInterface.OnClickListener mPositiveButtonListener;
+    private DialogInterface.OnClickListener mNegativeButtonListener;
+    private DialogInterface.OnDismissListener mDismissListener;
 
     private void init() {
         inflate(getContext(), R.layout.edit_dialog_layout, this);
@@ -165,13 +168,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     private void showTextDialog() {
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk, null,
-                mDialogBtnNo, null, null, false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
+                mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk, null,
-                null, false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
+                mPositiveButtonListener, mDismissListener, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, null, false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDismissListener,
+                false).show();
         }
     }
 
@@ -216,14 +220,17 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         mValueTV.setText(mUserEditText.getEditDialogText());
                     }
                 }
+                if (mPositiveButtonListener != null) {
+                    mPositiveButtonListener.onClick(dialog, which);
+                }
             }
         };
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText, mDialogBtnOk,
-                listener, mDialogBtnNo, null, null, false).show();
+                listener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText, mDialogBtnOk,
-                listener, null, false).show();
+                listener, mDismissListener, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText,
                 new DialogInterface.OnDismissListener() {
@@ -231,6 +238,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                     public void onDismiss(DialogInterface dialog) {
                         if (mValueTV != null) {
                             mValueTV.setText(mUserEditText.getEditDialogText());
+                        }
+                        if (mDismissListener != null) {
+                            mDismissListener.onDismiss(dialog);
                         }
                     }
                 }, false).show();
@@ -253,10 +263,11 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle,
-                (String[]) mDialogList.toArray(), mDialogBtnOk, null, listener, null, false).show();
+                (String[]) mDialogList.toArray(), mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener,
+                false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle,
-                (String[]) mDialogList.toArray(), listener, null, false).show();
+                (String[]) mDialogList.toArray(), listener, mDismissListener, false).show();
         }
     }
 
@@ -277,10 +288,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray, mDialogBtnOk,
-                null, listener, null, false).show();
+                mPositiveButtonListener, listener, mDismissListener, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray, listener, null,
-                false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray, listener,
+                mDismissListener, false).show();
         }
     }
 
@@ -305,8 +316,8 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         }
         picker.setCurrentHour(hour);
         picker.setCurrentMinute(minute);
-        CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, picker, mDialogBtnOk, null,
-            new DialogInterface.OnDismissListener() {
+        CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, picker, mDialogBtnOk,
+            mPositiveButtonListener, new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     int checkedHour = picker.getCurrentHour();
@@ -317,6 +328,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                     } else {
                         String checkedTime = getTimeFormat(checkedHour, checkedMinute);
                         mValueTV.setText(checkedTime);
+                    }
+                    if (mDismissListener != null) {
+                        mDismissListener.onDismiss(dialog);
                     }
                 }
             }, true).show();
@@ -341,8 +355,8 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             picker.init(mTodayYear, mTodayMonthOfYear, mTodayDayOfMonth, null);
         }
 
-        CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, picker, mDialogBtnOk, null,
-            new DialogInterface.OnDismissListener() {
+        CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, picker, mDialogBtnOk,
+            mPositiveButtonListener, new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     int checkedYear = picker.getYear();
@@ -354,6 +368,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                     } else {
                         String currentDate = getDateFormat(checkedYear, checkedMonth, checkedDay);
                         mValueTV.setText(currentDate);
+                    }
+                    if (mDismissListener != null) {
+                        mDismissListener.onDismiss(dialog);
                     }
                 }
             }, true).show();
@@ -431,6 +448,18 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             throw new RuntimeException("当前类型不是 TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
         }
         mIEditDialogDataTimeCallBack = callBack;
+    }
+
+    private void setPositiveButtonListener(DialogInterface.OnClickListener positiveButtonListener) {
+        mPositiveButtonListener = positiveButtonListener;
+    }
+
+    private void setNegativeButtonListener(DialogInterface.OnClickListener negativeButtonListener) {
+        mNegativeButtonListener = negativeButtonListener;
+    }
+
+    private void setDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+        mDismissListener = onDismissListener;
     }
 
     /*********************************************************************************/
