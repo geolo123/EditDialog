@@ -1,7 +1,7 @@
 package com.android.geolo.editdialog.lib;
 
 /**
- * åˆ›å»ºæ–‡æœ¬ç¼–è¾‘Viewçš„å›žè°ƒ
+ * ´´½¨ÎÄ±¾±à¼­ViewµÄ»Øµ÷
  * Created by jwb.geolo on 2016/7/23.
  */
 public interface IEditDialogTextInitCallBack<T> {

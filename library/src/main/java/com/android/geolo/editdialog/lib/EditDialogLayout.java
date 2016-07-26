@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 /**
- * ç¼–è¾‘æ¡å¸ƒå±€å…ƒç´ ï¼Œç‚¹å‡»éƒ½æ˜¯å¯¹è¯æ¡†
+ * ±à¼­Ìõ²¼¾ÖÔªËØ£¬µã»÷¶¼ÊÇ¶Ô»°¿ò
  * Created by geolo on 2016/7/19.
  */
 public class EditDialogLayout extends LinearLayout implements View.OnClickListener {
@@ -64,7 +64,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private int mDrawablePadding = 0;
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
-    private int mValueFormatResID;// æ–‡æœ¬æ ¼å¼åŒ–èµ„æº
+    private int mValueFormatResID;// ÎÄ±¾¸ñÊ½»¯×ÊÔ´
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
@@ -338,7 +338,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     private void showDateDialog() {
         final DatePicker picker = new DatePicker(getContext());
-        picker.setCalendarViewShown(false);// ä¸æ˜¾ç¤ºæ—¥å†éƒ¨åˆ†,åªæ˜¾ç¤ºæ—¥æœŸè½¬ç›˜éƒ¨åˆ†
+        picker.setCalendarViewShown(false);// ²»ÏÔÊ¾ÈÕÀú²¿·Ö,Ö»ÏÔÊ¾ÈÕÆÚ×ªÅÌ²¿·Ö
         String content = mValueTV.getText().toString();
         Calendar calendar = Calendar.getInstance();
         final int currentHour = calendar.get(Calendar.HOUR);
@@ -386,21 +386,21 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_LIST_ITEM} ç±»å‹ä¸‹
+     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_LIST_ITEM} ÀàĞÍÏÂ
      */
     public void setList(@NonNull ArrayList<CharSequence> stringList) {
         if (mCurrentType != TYPE_LIST_ITEM) {
-            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_LIST_ITEM");
+            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_LIST_ITEM");
         }
         mDialogList = stringList;
     }
 
     /**
-     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_ARRAY_ITEM} ç±»å‹ä¸‹
+     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_ARRAY_ITEM} ÀàĞÍÏÂ
      */
     public void setList(@NonNull CharSequence[] stringArray) {
         if (mCurrentType != TYPE_ARRAY_ITEM) {
-            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_ARRAY_ITEM");
+            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_ARRAY_ITEM");
         }
         mDialogArray = stringArray;
     }
@@ -422,22 +422,22 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * è®¾ç½®æ–‡æœ¬æ ¼å¼åŒ–ï¼Œåœ¨ {@link #TYPE_EDIT} ç±»å‹ä¸‹
+     * ÉèÖÃÎÄ±¾¸ñÊ½»¯£¬ÔÚ {@link #TYPE_EDIT} ÀàĞÍÏÂ
      */
     public void setValueFormatRes(@StringRes int formatRes) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
+            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
         }
         mValueFormatResID = formatRes;
     }
 
     /**
-     * è®¾ç½®è‡ªå®šä¹‰çš„è¾“å…¥å‹å¯¹è¯æ¡†ï¼Œåœ¨ {@link #TYPE_EDIT} ç±»å‹ä¸‹
+     * ÉèÖÃ×Ô¶¨ÒåµÄÊäÈëĞÍ¶Ô»°¿ò£¬ÔÚ {@link #TYPE_EDIT} ÀàĞÍÏÂ
      */
     public <T extends EditDialogText> void setDefaultEdittext(Class<T> defaultClass,
         IEditDialogTextInitCallBack<T> callBack) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
+            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
         }
         mUserEditTextClass = defaultClass;
         mIEditDialogTextInitCallBack = callBack;
@@ -445,20 +445,20 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     public void setIEditDialogDataTimeCallBack(IEditDialogDataTimeCallBack callBack) {
         if (mCurrentType != TYPE_TIME && mCurrentType != TYPE_DATE && mCurrentType != TYPE_DATE_TIME) {
-            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
+            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
         }
         mIEditDialogDataTimeCallBack = callBack;
     }
 
-    private void setPositiveButtonListener(DialogInterface.OnClickListener positiveButtonListener) {
+    public void setPositiveButtonListener(DialogInterface.OnClickListener positiveButtonListener) {
         mPositiveButtonListener = positiveButtonListener;
     }
 
-    private void setNegativeButtonListener(DialogInterface.OnClickListener negativeButtonListener) {
+    public void setNegativeButtonListener(DialogInterface.OnClickListener negativeButtonListener) {
         mNegativeButtonListener = negativeButtonListener;
     }
 
-    private void setDismissListener(DialogInterface.OnDismissListener onDismissListener) {
+    public void setDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         mDismissListener = onDismissListener;
     }
 

@@ -8,17 +8,17 @@ public class ProcessUtil {
     private static boolean processing = false;
 
     /**
-     * å½“å‰æ˜¯å¦æ­£åœ¨å¤„ç†ï¼Œé˜²æ­¢é‡å¤ç‚¹å‡»ï¼Œé»˜è®¤500ms
-     * @return æ˜¯å¦æ­£åœ¨å¤„ç†
+     * µ±Ç°ÊÇ·ñÕıÔÚ´¦Àí£¬·ÀÖ¹ÖØ¸´µã»÷£¬Ä¬ÈÏ500ms
+     * @return ÊÇ·ñÕıÔÚ´¦Àí
      */
     public static synchronized boolean isProcessing() {
         return isProcessing(500);
     }
 
     /**
-     * å½“å‰æ˜¯å¦æ­£åœ¨å¤„ç†ï¼Œé˜²æ­¢é‡å¤ç‚¹å‡»
-     * @param minProcessingTime æ‰€éœ€æœ€çŸ­å¤„ç†äº‹ä»¶
-     * @return æ˜¯å¦æ­£åœ¨å¤„ç†
+     * µ±Ç°ÊÇ·ñÕıÔÚ´¦Àí£¬·ÀÖ¹ÖØ¸´µã»÷
+     * @param minProcessingTime ËùĞè×î¶Ì´¦ÀíÊÂ¼ş
+     * @return ÊÇ·ñÕıÔÚ´¦Àí
      */
     public static synchronized boolean isProcessing(final long minProcessingTime) {
         if (!processing) {
