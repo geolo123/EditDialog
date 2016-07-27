@@ -12,13 +12,14 @@
         date_time：选择时间日期同框类型
         */
         <attr name="geo_style" format="enum">
-            <enum name="text" value="0" />
-            <enum name="edit" value="1" />
-            <enum name="list_item" value="2" />
-            <enum name="array_item" value="3" />
-            <enum name="time" value="4" />
-            <enum name="date" value="5" />
-            <enum name="date_time" value="6" />
+            <enum name="none" value="0" />
+            <enum name="text" value="1" />
+            <enum name="edit" value="2" />
+            <enum name="list_item" value="3" />
+            <enum name="array_item" value="4" />
+            <enum name="time" value="5" />
+            <enum name="date" value="6" />
+            <enum name="date_time" value="7" />
         </attr>
 
         <attr name="geo_key_text_size" format="dimension" />

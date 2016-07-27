@@ -28,14 +28,14 @@ import android.widget.TimePicker;
  * Created by geolo on 2016/7/19.
  */
 public class EditDialogLayout extends LinearLayout implements View.OnClickListener {
-
-    private static final int TYPE_TEXT = 0;
-    private static final int TYPE_EDIT = 1;
-    private static final int TYPE_LIST_ITEM = 2;
-    private static final int TYPE_ARRAY_ITEM = 3;
-    private static final int TYPE_TIME = 4;
-    private static final int TYPE_DATE = 5;
-    private static final int TYPE_DATE_TIME = 6;
+    private static final int TYPE_NONE = 0;
+    private static final int TYPE_TEXT = 1;
+    private static final int TYPE_EDIT = 2;
+    private static final int TYPE_LIST_ITEM = 3;
+    private static final int TYPE_ARRAY_ITEM = 4;
+    private static final int TYPE_TIME = 5;
+    private static final int TYPE_DATE = 6;
+    private static final int TYPE_DATE_TIME = 7;
 
     private static final int STYLE_DIALOG_NONE = 0;
     private static final int STYLE_DIALOG_SINGLE = 1;
@@ -107,7 +107,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         final TypedArray aType =
             getContext().obtainStyledAttributes(attrs, R.styleable.edit_dialog_layout, defStyleAttr, defStyleRes);
         try {
-            mCurrentType = aType.getInt(R.styleable.edit_dialog_layout_geo_style, TYPE_TEXT);
+            mCurrentType = aType.getInt(R.styleable.edit_dialog_layout_geo_style, TYPE_NONE);
             mKeyTextSize = aType.getDimensionPixelSize(R.styleable.edit_dialog_layout_geo_key_text_size, 15);
             mKeyTextColor = aType.getColor(R.styleable.edit_dialog_layout_geo_key_text_color, 0);
             mKeyHintColor = aType.getColor(R.styleable.edit_dialog_layout_geo_key_hint_color, 0);
