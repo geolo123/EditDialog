@@ -1,7 +1,7 @@
 package com.android.geolo.editdialog.lib;
 
 /**
- * 日期或者时间选择器的回调函数
+ * 鏃ユ湡鎴栬�呮椂闂撮�夋嫨鍣ㄧ殑鍥炶皟鍑芥暟
  * Created by jwb.geolo on 2016/7/25.
  */
 public interface IEditDialogDataTimeCallBack {

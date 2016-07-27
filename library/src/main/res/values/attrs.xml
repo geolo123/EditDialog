@@ -3,10 +3,13 @@
 
     <declare-styleable name="edit_dialog_layout">
         /** geo_style 对话框的类型
+        none ： 没有对话框的类型
         text ： 简单的文本提示类型
         edit ： 可编辑输入框类型
         list_item：ArrayList的列表元素类型
         array_item：字符串array的列表元素类型
+        list_mutil_choice_item：ArrayList的可多选择的列表元素类型
+        array_mutil_choice_item：字符串array的可多选择的列表元素类型
         time：选择时间框类型
         date：选择日期框类型
         date_time：选择时间日期同框类型
@@ -17,9 +20,11 @@
             <enum name="edit" value="2" />
             <enum name="list_item" value="3" />
             <enum name="array_item" value="4" />
-            <enum name="time" value="5" />
-            <enum name="date" value="6" />
-            <enum name="date_time" value="7" />
+            <enum name="list_mutil_choice_item" value="5" />
+            <enum name="array_mutil_choice_item" value="6" />
+            <enum name="time" value="7" />
+            <enum name="date" value="8" />
+            <enum name="date_time" value="9" />
         </attr>
 
         <attr name="geo_key_text_size" format="dimension" />

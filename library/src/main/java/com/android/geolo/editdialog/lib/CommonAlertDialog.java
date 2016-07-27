@@ -3,6 +3,8 @@ package com.android.geolo.editdialog.lib;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,49 +32,32 @@ public class CommonAlertDialog extends Dialog {
         super(context);
     }
 
-    /**
-     * Helper class for creating a custom dialog
-     */
     public static class Builder {
-
         private Context context;
         private String title;
         private String message;
         private CharSequence[] items;
+        private int simpleListItemLayoutRes = 0;
         private boolean[] booleans;
         private String positiveButtonText;
         private String negativeButtonText;
         private boolean cancelable = true;
         private View contentView;
-
         private SpannableStringBuilder messageBuilder;
-
         private OnClickListener listItemClickListener, positiveButtonClickListener, negativeButtonClickListener;
         private OnMultiChoiceClickListener listMultiChoiceClickListener;
-
         private boolean canceledOnTouchOutside;
-
         private OnDismissListener onDismissListener;
 
         public Builder(Context context) {
             this.context = context;
         }
 
-        /**
-         * Set the Dialog message from String
-         *
-         * @return
-         */
         public Builder setMessage(String message) {
             this.message = message;
             return this;
         }
 
-        /**
-         * Set the Dialog message from resource
-         *
-         * @return
-         */
         public Builder setMessage(int message) {
             this.message = (String) context.getText(message);
             return this;
@@ -98,97 +83,49 @@ public class CommonAlertDialog extends Dialog {
             return this;
         }
 
-        /**
-         * Set the Dialog message from SpannableStringBuilder
-         *
-         * @return
-         */
+        public Builder setSimpleListItemLayout(@LayoutRes int simpleListItemLayoutRes) {
+            this.simpleListItemLayoutRes = simpleListItemLayoutRes;
+            return this;
+        }
+
         public Builder setMessageBuilder(SpannableStringBuilder messageBuilder) {
             this.messageBuilder = messageBuilder;
             return this;
         }
 
-        /**
-         * Set the Dialog title from resource
-         *
-         * @param title
-         * @return
-         */
         public Builder setTitle(int title) {
             this.title = (String) context.getText(title);
             return this;
         }
 
-        /**
-         * Set the Dialog title from String
-         *
-         * @param title
-         * @return
-         */
         public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        /**
-         * Set a custom content view for the Dialog.
-         * If a message is set, the contentView is not
-         * added to the Dialog...
-         *
-         * @param v
-         * @return
-         */
         public Builder setContentView(View v) {
             this.contentView = v;
             return this;
         }
 
-        /**
-         * Set the positive button resource and it's listener
-         *
-         * @param positiveButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setPositiveButton(int positiveButtonText, OnClickListener listener) {
+        public Builder setPositiveButton(@StringRes int positiveButtonText, OnClickListener listener) {
             this.positiveButtonText = (String) context.getText(positiveButtonText);
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        /**
-         * Set the positive button text and it's listener
-         *
-         * @param positiveButtonText
-         * @param listener
-         * @return
-         */
         public Builder setPositiveButton(String positiveButtonText, OnClickListener listener) {
             this.positiveButtonText = positiveButtonText;
             this.positiveButtonClickListener = listener;
             return this;
         }
 
-        /**
-         * Set the negative button resource and it's listener
-         *
-         * @param negativeButtonText
-         * @param listener
-         * @return
-         */
-        public Builder setNegativeButton(int negativeButtonText, OnClickListener listener) {
+        public Builder setNegativeButton(@StringRes int negativeButtonText, OnClickListener listener) {
             this.negativeButtonText = (String) context.getText(negativeButtonText);
             this.negativeButtonClickListener = listener;
             return this;
         }
 
-        /**
-         * Set the negative button text and it's listener
-         *
-         * @param negativeButtonText
-         * @param listener
-         * @return
-         */
         public Builder setNegativeButton(String negativeButtonText, OnClickListener listener) {
             this.negativeButtonText = negativeButtonText;
             this.negativeButtonClickListener = listener;
@@ -215,12 +152,10 @@ public class CommonAlertDialog extends Dialog {
          */
         public CommonAlertDialog create() {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            // instantiate the dialog with the custom Theme
             final CommonAlertDialog dialog = new CommonAlertDialog(context, R.style.alertDialog);
             dialog.setCancelable(cancelable);
             dialog.setCanceledOnTouchOutside(canceledOnTouchOutside);
             View layout = inflater.inflate(R.layout.common_dialog_alert, null);
-            // set the dialog title
             if (!TextUtils.isEmpty(title)) {
                 ((TextView) layout.findViewById(R.id.title)).setText(title);
                 layout.findViewById(R.id.title_divider).setVisibility(View.VISIBLE);
@@ -228,7 +163,6 @@ public class CommonAlertDialog extends Dialog {
                 layout.findViewById(R.id.title).setVisibility(View.GONE);
                 layout.findViewById(R.id.title_divider).setVisibility(View.GONE);
             }
-            // set the confirm button
             if (!TextUtils.isEmpty(positiveButtonText)) {
                 layout.findViewById(R.id.btn_layout).setVisibility(View.VISIBLE);
                 ((Button) layout.findViewById(R.id.btn_positive)).setText(positiveButtonText);
@@ -241,11 +175,9 @@ public class CommonAlertDialog extends Dialog {
                     }
                 });
             } else {
-                // if no confirm button just set the visibility to GONE
                 layout.findViewById(R.id.btn_positive).setVisibility(View.GONE);
             }
 
-            // set the cancel button
             if (!TextUtils.isEmpty(negativeButtonText)) {
                 layout.findViewById(R.id.btn_layout).setVisibility(View.VISIBLE);
                 ((Button) layout.findViewById(R.id.btn_negative)).setText(negativeButtonText);
@@ -258,10 +190,9 @@ public class CommonAlertDialog extends Dialog {
                     }
                 });
             } else {
-                // if no confirm button just set the visibility to GONE
                 layout.findViewById(R.id.btn_negative).setVisibility(View.GONE);
             }
-            // set the content message
+
             if (message != null) {
                 layout.findViewById(R.id.message).setVisibility(View.VISIBLE);
                 layout.findViewById(R.id.listView).setVisibility(View.GONE);
@@ -270,23 +201,26 @@ public class CommonAlertDialog extends Dialog {
                 ((TextView) layout.findViewById(R.id.message)).setText(messageBuilder);
             }
 
-            // set the list view
             if (items != null) {
                 layout.findViewById(R.id.listView).setVisibility(View.VISIBLE);
                 layout.findViewById(R.id.message).setVisibility(View.GONE);
                 ListView listView = (ListView) layout.findViewById(R.id.listView);
                 ArrayAdapter<CharSequence> adapter = null;
                 if (listItemClickListener != null) {
-                    adapter = new ArrayAdapter<>(context, R.layout.simple_list_item_default, items);
+                    adapter =
+                        new ArrayAdapter<>(context, simpleListItemLayoutRes > 0 ? simpleListItemLayoutRes
+                            : R.layout.simple_list_item_default, items);
                 } else if (listMultiChoiceClickListener != null) {
                     if (booleans != null && booleans.length > 0) {
                         adapter =
-                            new MutilChoiceAdapter<>(context, R.layout.simple_list_item_default_check_btn, items,
-                                booleans, listMultiChoiceClickListener, dialog);
+                            new MutilChoiceAdapter<>(context, simpleListItemLayoutRes > 0 ? simpleListItemLayoutRes
+                                : R.layout.simple_list_item_default_check_btn, items, booleans,
+                                listMultiChoiceClickListener, dialog);
                     } else {
                         adapter =
-                            new MutilChoiceAdapter<>(context, R.layout.simple_list_item_default_check_btn, items,
-                                listMultiChoiceClickListener, dialog);
+                            new MutilChoiceAdapter<>(context, simpleListItemLayoutRes > 0 ? simpleListItemLayoutRes
+                                : R.layout.simple_list_item_default_check_btn, items, listMultiChoiceClickListener,
+                                dialog);
                     }
                 }
                 if (adapter != null) {
@@ -316,8 +250,6 @@ public class CommonAlertDialog extends Dialog {
                 });
             }
             if (contentView != null) {
-                // if no message set
-                // add the contentView to the dialog body
                 ((LinearLayout) layout.findViewById(R.id.content)).removeAllViews();
                 ((LinearLayout) layout.findViewById(R.id.content)).addView(contentView, new LayoutParams(
                     LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));

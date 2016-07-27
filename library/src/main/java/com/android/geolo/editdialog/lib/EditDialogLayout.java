@@ -12,6 +12,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
@@ -24,7 +25,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 /**
- * ±à¼­Ìõ²¼¾ÖÔªËØ£¬µã»÷¶¼ÊÇ¶Ô»°¿ò
+ * ç¼–è¾‘æ¡å¸ƒå±€å…ƒç´ ï¼Œç‚¹å‡»éƒ½æ˜¯å¯¹è¯æ¡†
  * Created by geolo on 2016/7/19.
  */
 public class EditDialogLayout extends LinearLayout implements View.OnClickListener {
@@ -33,9 +34,11 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private static final int TYPE_EDIT = 2;
     private static final int TYPE_LIST_ITEM = 3;
     private static final int TYPE_ARRAY_ITEM = 4;
-    private static final int TYPE_TIME = 5;
-    private static final int TYPE_DATE = 6;
-    private static final int TYPE_DATE_TIME = 7;
+    private static final int TYPE_LIST_MUTIL_CHOICE_ITEM = 5;
+    private static final int TYPE_ARRAY_MUTIL_CHOICE_ITEM = 6;
+    private static final int TYPE_TIME = 7;
+    private static final int TYPE_DATE = 8;
+    private static final int TYPE_DATE_TIME = 9;
 
     private static final int STYLE_DIALOG_NONE = 0;
     private static final int STYLE_DIALOG_SINGLE = 1;
@@ -58,13 +61,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private String mDialogBtnNo = "No";
     private int mDialogEditInputType = 0;
     private CharSequence[] mDialogArray = null;
+    private int simpleListItemLayoutRes = 0;
     private ArrayList<CharSequence> mDialogList = null;
     private Drawable mDrawableLeft = null;
     private Drawable mDrawableRight = null;
     private int mDrawablePadding = 0;
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
-    private int mValueFormatResID;// ÎÄ±¾¸ñÊ½»¯×ÊÔ´
+    private int mValueFormatResID;// æ–‡æœ¬æ ¼å¼åŒ–èµ„æº
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
@@ -74,6 +78,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private DialogInterface.OnClickListener mPositiveButtonListener;
     private DialogInterface.OnClickListener mNegativeButtonListener;
     private DialogInterface.OnDismissListener mDismissListener;
+    private DialogInterface.OnMultiChoiceClickListener mOnMultiChoiceClickListener;
 
     private void init() {
         inflate(getContext(), R.layout.edit_dialog_layout, this);
@@ -153,6 +158,12 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                 break;
             case TYPE_ARRAY_ITEM:
                 showArrayItemDialog();
+                break;
+            case TYPE_LIST_MUTIL_CHOICE_ITEM:
+                showMutilChoiceListItemDialog();
+                break;
+            case TYPE_ARRAY_MUTIL_CHOICE_ITEM:
+                showMutilChoiceArrayItemDialog();
                 break;
             case TYPE_TIME:
                 showTimeDialog();
@@ -251,24 +262,8 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         if (mDialogList == null || mDialogList.isEmpty()) {
             return;
         }
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mValueTV != null) {
-                    mValueTV.setText(mDialogList.get(which));
-                }
-            }
-        };
-        if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
-
-        } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle,
-                (String[]) mDialogList.toArray(), mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener,
-                false).show();
-        } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle,
-                (String[]) mDialogList.toArray(), listener, mDismissListener, false).show();
-        }
+        mDialogArray = (String[]) mDialogList.toArray();
+        showArrayItemDialog();
     }
 
     private void showArrayItemDialog() {
@@ -287,12 +282,29 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
 
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray, mDialogBtnOk,
-                mPositiveButtonListener, listener, mDismissListener, false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
+                simpleListItemLayoutRes, mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener, false)
+                .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
-            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray, listener,
-                mDismissListener, false).show();
+            CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
+                simpleListItemLayoutRes, listener, mDismissListener, false).show();
         }
+    }
+
+    private void showMutilChoiceListItemDialog() {
+        if (mDialogList == null || mDialogList.isEmpty()) {
+            return;
+        }
+        mDialogArray = (String[]) mDialogList.toArray();
+        showMutilChoiceArrayItemDialog();
+    }
+
+    private void showMutilChoiceArrayItemDialog() {
+        if (mDialogArray == null) {
+            return;
+        }
+        CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
+            simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, false).show();
     }
 
     private void showTimeDialog() {
@@ -338,7 +350,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     private void showDateDialog() {
         final DatePicker picker = new DatePicker(getContext());
-        picker.setCalendarViewShown(false);// ²»ÏÔÊ¾ÈÕÀú²¿·Ö,Ö»ÏÔÊ¾ÈÕÆÚ×ªÅÌ²¿·Ö
+        picker.setCalendarViewShown(false);// ä¸æ˜¾ç¤ºæ—¥å†éƒ¨åˆ†,åªæ˜¾ç¤ºæ—¥æœŸè½¬ç›˜éƒ¨åˆ†
         String content = mValueTV.getText().toString();
         Calendar calendar = Calendar.getInstance();
         final int currentHour = calendar.get(Calendar.HOUR);
@@ -386,21 +398,21 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_LIST_ITEM} ÀàĞÍÏÂ
+     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_LIST_ITEM} ç±»å‹ä¸‹
      */
     public void setList(@NonNull ArrayList<CharSequence> stringList) {
         if (mCurrentType != TYPE_LIST_ITEM) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_LIST_ITEM");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_LIST_ITEM");
         }
         mDialogList = stringList;
     }
 
     /**
-     * ÉèÖÃÁĞ±íÔªËØ£¬ÔÚ {@link #TYPE_ARRAY_ITEM} ÀàĞÍÏÂ
+     * è®¾ç½®åˆ—è¡¨å…ƒç´ ï¼Œåœ¨ {@link #TYPE_ARRAY_ITEM} ç±»å‹ä¸‹
      */
     public void setList(@NonNull CharSequence[] stringArray) {
         if (mCurrentType != TYPE_ARRAY_ITEM) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_ARRAY_ITEM");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_ARRAY_ITEM");
         }
         mDialogArray = stringArray;
     }
@@ -422,22 +434,22 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
-     * ÉèÖÃÎÄ±¾¸ñÊ½»¯£¬ÔÚ {@link #TYPE_EDIT} ÀàĞÍÏÂ
+     * è®¾ç½®æ–‡æœ¬æ ¼å¼åŒ–ï¼Œåœ¨ {@link #TYPE_EDIT} ç±»å‹ä¸‹
      */
     public void setValueFormatRes(@StringRes int formatRes) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
         }
         mValueFormatResID = formatRes;
     }
 
     /**
-     * ÉèÖÃ×Ô¶¨ÒåµÄÊäÈëĞÍ¶Ô»°¿ò£¬ÔÚ {@link #TYPE_EDIT} ÀàĞÍÏÂ
+     * è®¾ç½®è‡ªå®šä¹‰çš„è¾“å…¥å‹å¯¹è¯æ¡†ï¼Œåœ¨ {@link #TYPE_EDIT} ç±»å‹ä¸‹
      */
     public <T extends EditDialogText> void setDefaultEdittext(Class<T> defaultClass,
         IEditDialogTextInitCallBack<T> callBack) {
         if (mCurrentType != TYPE_EDIT) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_EDIT");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_EDIT");
         }
         mUserEditTextClass = defaultClass;
         mIEditDialogTextInitCallBack = callBack;
@@ -445,9 +457,21 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     public void setIEditDialogDataTimeCallBack(IEditDialogDataTimeCallBack callBack) {
         if (mCurrentType != TYPE_TIME && mCurrentType != TYPE_DATE && mCurrentType != TYPE_DATE_TIME) {
-            throw new RuntimeException("µ±Ç°ÀàĞÍ²»ÊÇ TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_TIME / TYPE_DATE / TYPE_DATE_TIME ");
         }
         mIEditDialogDataTimeCallBack = callBack;
+    }
+
+    /**
+     * @param simpleListItemLayoutRes åˆ—è¡¨å…ƒç´ çš„å¸ƒå±€ï¼Œé€‚ç”¨äºåˆ—è¡¨å’Œå¤šé€‰åˆ—è¡¨é€‰æ‹©
+     */
+    public void setSimpleListItemLayout(@LayoutRes int simpleListItemLayoutRes) {
+        if (mCurrentType != TYPE_LIST_ITEM && mCurrentType != TYPE_ARRAY_ITEM
+            && mCurrentType != TYPE_LIST_MUTIL_CHOICE_ITEM && mCurrentType != TYPE_ARRAY_MUTIL_CHOICE_ITEM) {
+            throw new RuntimeException(
+                "å½“å‰ç±»å‹ä¸æ˜¯ TYPE_LIST_ITEM / TYPE_ARRAY_ITEM / TYPE_LIST_MUTIL_CHOICE_ITEM / TYPE_ARRAY_MUTIL_CHOICE_ITEM");
+        }
+        this.simpleListItemLayoutRes = simpleListItemLayoutRes;
     }
 
     public void setPositiveButtonListener(DialogInterface.OnClickListener positiveButtonListener) {
@@ -460,6 +484,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     public void setDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         mDismissListener = onDismissListener;
+    }
+
+    public void setMultiChoiceClickListener(DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener) {
+        if (mCurrentType != TYPE_LIST_MUTIL_CHOICE_ITEM && mCurrentType != TYPE_ARRAY_MUTIL_CHOICE_ITEM) {
+            throw new RuntimeException("å½“å‰ç±»å‹ä¸æ˜¯ TYPE_LIST_MUTIL_CHOICE_ITEM / TYPE_ARRAY_MUTIL_CHOICE_ITEM ");
+        }
+        mOnMultiChoiceClickListener = onMultiChoiceClickListener;
     }
 
     /*********************************************************************************/
