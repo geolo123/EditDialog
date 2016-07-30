@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
@@ -17,8 +18,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -69,6 +73,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
     private int mValueFormatResID;// 文本格式化资源
+    private int mValueGravity = Gravity.TOP | Gravity.START;
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
@@ -93,6 +98,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         mKeyTV.setText(mKeyTextStr);
         mValueTV.setText(mValueTextStr);
         mValueTV.setHint(mValueHint);
+        mValueTV.setGravity(mValueGravity);
         this.setOnClickListener(this);
         mKeyTV.setCompoundDrawablePadding(mDrawablePadding);
         mValueTV.setCompoundDrawablePadding(mDrawablePadding);
@@ -135,6 +141,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             isValueVisibility = aType.getBoolean(R.styleable.edit_dialog_layout_geo_value_visibility, true);
             mDialogEditInputType =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_edit_inputType, EditorInfo.TYPE_CLASS_TEXT);
+            mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, -1);
         } finally {
             aType.recycle();
         }
@@ -147,6 +154,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         }
         switch (mCurrentType) {
             default:
+                break;
             case TYPE_TEXT:
                 showTextDialog();
                 break;
@@ -238,10 +246,26 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         };
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText, mDialogBtnOk,
-                listener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false).show();
+                listener, mDialogBtnNo, mNegativeButtonListener, new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (mDismissListener != null) {
+                            mDismissListener.onDismiss(dialog);
+                        }
+                        hideKeyboard();
+                    }
+                }, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText, mDialogBtnOk,
-                listener, mDismissListener, false).show();
+                listener, new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (mDismissListener != null) {
+                            mDismissListener.onDismiss(dialog);
+                        }
+                        hideKeyboard();
+                    }
+                }, false).show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText,
                 new DialogInterface.OnDismissListener() {
@@ -253,6 +277,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         if (mDismissListener != null) {
                             mDismissListener.onDismiss(dialog);
                         }
+                        hideKeyboard();
                     }
                 }, false).show();
         }
@@ -398,6 +423,24 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     }
 
     /**
+     * 隐藏软键盘
+     */
+    private void hideKeyboard() {
+        Context context = getContext();
+        if (context != null && context instanceof Activity) {
+            Activity activity = (Activity) context;
+            InputMethodManager manager;
+            if (activity.getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+                if (activity.getCurrentFocus() != null) {
+                    manager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        }
+    }
+
+    /**
      * 设置列表元素，在 {@link #TYPE_LIST_ITEM} 类型下
      */
     public void setList(@NonNull ArrayList<CharSequence> stringList) {
@@ -431,6 +474,11 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     public CharSequence getValueText() {
         return mValueTV.getText();
+    }
+
+    public void setValueGravity(int gravity) {
+        mValueGravity = gravity;
+        mValueTV.setGravity(mValueGravity);
     }
 
     /**

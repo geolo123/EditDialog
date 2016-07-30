@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'//不然要降低Gradle的版本
 apply plugin: 'com.jfrog.bintray'
 // 提交到仓库中的版本号
-version = "1.0.5"
+version = "1.0.7"
 
 android {
     compileSdkVersion 22
