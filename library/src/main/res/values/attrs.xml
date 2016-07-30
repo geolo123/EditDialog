@@ -84,6 +84,7 @@
         <attr name="geo_dialog_msg" format="string" />
         <attr name="geo_dialog_ok" format="string" />
         <attr name="geo_dialog_no" format="string" />
+        <attr name="geo_dialog_layout" format="reference" />
 
         /** geo_dialog_array 设置列表对话框的元素，geo_style必须为array_item */
         <attr name="geo_dialog_array" format="reference" />

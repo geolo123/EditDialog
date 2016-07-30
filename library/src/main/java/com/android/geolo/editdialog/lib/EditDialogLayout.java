@@ -79,6 +79,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private TextView mKeyTV;
     private TextView mValueTV;
     private LinearLayout mValueLayout;
+    private ViewGroup mDialogLayout;
     private Class<? extends EditDialogText> mUserEditTextClass;
     private EditDialogText mUserEditText;
     private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
@@ -86,6 +87,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private DialogInterface.OnClickListener mPositiveButtonListener;
     private DialogInterface.OnClickListener mNegativeButtonListener;
     private DialogInterface.OnDismissListener mDismissListener;
+    private DialogInterface.OnClickListener mOnItemClickListener;
     private DialogInterface.OnMultiChoiceClickListener mOnMultiChoiceClickListener;
 
     private void init() {
@@ -149,6 +151,8 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, mValueGravity);
             mValueLayoutGravity =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_value_layout_gravity, mValueLayoutGravity);
+            int dialogLatoutRes = aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_layout, -1);
+            setDialogLayout(dialogLatoutRes);
         } finally {
             aType.recycle();
         }
@@ -195,13 +199,22 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private void showTextDialog() {
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
-                mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false).show();
+                mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
-                mPositiveButtonListener, mDismissListener, false).show();
+                mPositiveButtonListener, mDismissListener, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDismissListener,
-                false).show();
+                false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         }
     }
 
@@ -261,7 +274,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false).show();
+                }, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText, mDialogBtnOk,
                 listener, new DialogInterface.OnDismissListener() {
@@ -272,7 +288,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false).show();
+                }, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mUserEditText,
                 new DialogInterface.OnDismissListener() {
@@ -286,7 +305,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false).show();
+                }, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         }
     }
 
@@ -302,24 +324,32 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         if (mDialogArray == null) {
             return;
         }
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mValueTV != null) {
-                    mValueTV.setText(mDialogArray[which]);
+        DialogInterface.OnClickListener listener = mOnItemClickListener;
+        if (listener == null) {
+            listener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (mValueTV != null) {
+                        mValueTV.setText(mDialogArray[which]);
+                    }
                 }
-            }
-        };
+            };
+        }
 
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
 
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
                 simpleListItemLayoutRes, mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
-                simpleListItemLayoutRes, listener, mDismissListener, false).show();
+                simpleListItemLayoutRes, listener, mDismissListener, false)
+                .setDialogLayout(mDialogLayout)
+                .create()
+                .show();
         }
     }
 
@@ -336,7 +366,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             return;
         }
         CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
-            simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, false).show();
+            simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, false)
+            .setDialogLayout(mDialogLayout)
+            .create()
+            .show();
     }
 
     private void showTimeDialog() {
@@ -377,7 +410,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         mDismissListener.onDismiss(dialog);
                     }
                 }
-            }, true).show();
+            }, true)
+            .setDialogLayout(mDialogLayout)
+            .create()
+            .show();
     }
 
     private void showDateDialog() {
@@ -417,7 +453,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         mDismissListener.onDismiss(dialog);
                     }
                 }
-            }, true).show();
+            }, true)
+            .setDialogLayout(mDialogLayout)
+            .create()
+            .show();
     }
 
     private String getTimeFormat(int hour, int minute) {
@@ -465,6 +504,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             throw new RuntimeException("当前类型不是 TYPE_ARRAY_ITEM");
         }
         mDialogArray = stringArray;
+    }
+
+    public TextView getKeyTV() {
+        return mKeyTV;
+    }
+
+    public TextView getValueTV() {
+        return mValueTV;
     }
 
     public void setKeyText(CharSequence text) {
@@ -541,11 +588,25 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         mDismissListener = onDismissListener;
     }
 
+    public void setItemClickListener(DialogInterface.OnClickListener itemClickListener) {
+        mOnItemClickListener = itemClickListener;
+    };
+
     public void setMultiChoiceClickListener(DialogInterface.OnMultiChoiceClickListener onMultiChoiceClickListener) {
         if (mCurrentType != TYPE_LIST_MUTIL_CHOICE_ITEM && mCurrentType != TYPE_ARRAY_MUTIL_CHOICE_ITEM) {
             throw new RuntimeException("当前类型不是 TYPE_LIST_MUTIL_CHOICE_ITEM / TYPE_ARRAY_MUTIL_CHOICE_ITEM ");
         }
         mOnMultiChoiceClickListener = onMultiChoiceClickListener;
+    }
+
+    /** 设置自定义的对话框布局 , 参考{@link com.android.geolo.editdialog.lib.R.layout#common_dialog_alert} , id 必须一致 */
+    public void setDialogLayout(ViewGroup dialogLayout) {
+        mDialogLayout = dialogLayout;
+    }
+
+    /** 设置自定义的对话框布局 , 参考{@link com.android.geolo.editdialog.lib.R.layout#common_dialog_alert} , id 必须一致 */
+    public void setDialogLayout(@LayoutRes int dialogLayoutRes) {
+        mDialogLayout = (ViewGroup) inflate(getContext(), dialogLayoutRes, null);
     }
 
     /*********************************************************************************/

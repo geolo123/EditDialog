@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_dialog_alert"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
@@ -12,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/geo_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -25,20 +24,20 @@
             android:textSize="18dp" />
 
         <View
-            android:id="@+id/title_divider"
+            android:id="@+id/geo_dialog_title_divider"
             style="@style/divider"
             android:layout_margin="0dip"
             android:layout_marginBottom="2dip"
             android:layout_marginTop="2dip" />
 
         <LinearLayout
-            android:id="@+id/content"
+            android:id="@+id/geo_dialog_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/message"
+                android:id="@+id/geo_dialog_message"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dip"
@@ -49,7 +48,7 @@
                 android:textSize="15dp" />
 
             <ListView
-                android:id="@+id/listView"
+                android:id="@+id/geo_dialog_listView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
@@ -61,17 +60,17 @@
         android:layout_margin="0dip" />
 
     <LinearLayout
-        android:id="@+id/btn_layout"
+        android:id="@+id/geo_dialog_btn_layout"
         android:layout_width="fill_parent"
         android:layout_height="42dip"
         android:divider="@drawable/linear_divider"
         android:gravity="center"
         android:showDividers="middle"
-        android:visibility="gone"
+        android:visibility="visible"
         android:weightSum="2">
 
         <Button
-            android:id="@+id/btn_negative"
+            android:id="@+id/geo_dialog_btn_negative"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -82,7 +81,7 @@
             android:textSize="15dp" />
 
         <Button
-            android:id="@+id/btn_positive"
+            android:id="@+id/geo_dialog_btn_positive"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"

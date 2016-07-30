@@ -19,14 +19,13 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, String msg,
+    public static Builder createCustomAlertDialog(Context context, String title, String msg,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setMessage(msg)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -39,16 +38,15 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, String msg,
-        String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener,
-        DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+    public static Builder createCustomAlertDialog(Context context, String title, String msg, String positiveButtonText,
+        DialogInterface.OnClickListener positiveButtonListener, DialogInterface.OnDismissListener onDismissListener,
+        boolean canceledOnTouchOutside) {
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setMessage(msg)
             .setPositiveButton(positiveButtonText, positiveButtonListener)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -63,18 +61,17 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, String msg,
-        String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
+    public static Builder createCustomAlertDialog(Context context, String title, String msg, String positiveButtonText,
+        DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
         DialogInterface.OnClickListener negativeButtonListener, DialogInterface.OnDismissListener onDismissListener,
         boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setMessage(msg)
             .setNegativeButton(negativeButtonText, negativeButtonListener)
             .setPositiveButton(positiveButtonText, positiveButtonListener)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     // ---------------- end 普通对话框 end -----------------------//
@@ -93,18 +90,17 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, View view,
-        String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
+    public static Builder createCustomAlertDialog(Context context, String title, View view, String positiveButtonText,
+        DialogInterface.OnClickListener positiveButtonListener, String negativeButtonText,
         DialogInterface.OnClickListener negativeButtonListener, DialogInterface.OnDismissListener onDismissListener,
         boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setContentView(view)
             .setNegativeButton(negativeButtonText, negativeButtonListener)
             .setPositiveButton(positiveButtonText, positiveButtonListener)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -117,16 +113,15 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, View view,
-        String positiveButtonText, DialogInterface.OnClickListener positiveButtonListener,
-        DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+    public static Builder createCustomAlertDialog(Context context, String title, View view, String positiveButtonText,
+        DialogInterface.OnClickListener positiveButtonListener, DialogInterface.OnDismissListener onDismissListener,
+        boolean canceledOnTouchOutside) {
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setContentView(view)
             .setPositiveButton(positiveButtonText, positiveButtonListener)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -137,14 +132,13 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, View view,
+    public static Builder createCustomAlertDialog(Context context, String title, View view,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setContentView(view)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     // ---------------- end 自定义布局对话框 end -----------------------//
@@ -160,16 +154,15 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener      对话框消失的监听器
      * @param canceledOnTouchOutside 是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
+    public static Builder createCustomAlertDialog(Context context, String title, CharSequence[] items,
         @LayoutRes int simpleListItemLayoutRes, DialogInterface.OnClickListener listItemClickListener,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setItems(items, listItemClickListener)
             .setSimpleListItemLayout(simpleListItemLayoutRes)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -181,18 +174,17 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener            对话框消失的监听器
      * @param canceledOnTouchOutside       是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
+    public static Builder createCustomAlertDialog(Context context, String title, CharSequence[] items,
         @LayoutRes int simpleListItemLayoutRes, String negativeButtonText,
         DialogInterface.OnClickListener negativeButtonListener, DialogInterface.OnClickListener listItemClickListener,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setNegativeButton(negativeButtonText, negativeButtonListener)
             .setSimpleListItemLayout(simpleListItemLayoutRes)
             .setItems(items, listItemClickListener)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     // ---------------- end 列表对话框 end -----------------------//
@@ -207,17 +199,16 @@ public class CustomAlertDialogUtils {
      * @param onDismissListener            对话框消失的监听器
      * @param canceledOnTouchOutside       是否点击外部取消，若为false，同时禁用返回键
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
+    public static Builder createCustomAlertDialog(Context context, String title, CharSequence[] items,
         @LayoutRes int simpleListItemLayoutRes,
         DialogInterface.OnMultiChoiceClickListener listMultiChoiceClickListener,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setMultiChoiceItems(items, listMultiChoiceClickListener)
             .setSimpleListItemLayout(simpleListItemLayoutRes)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
     /**
@@ -231,17 +222,16 @@ public class CustomAlertDialogUtils {
      * @param canceledOnTouchOutside   是否点击外部取消，若为false，同时禁用返回键
      * @return
      */
-    public static CommonAlertDialog createCustomAlertDialog(Context context, String title, CharSequence[] items,
+    public static Builder createCustomAlertDialog(Context context, String title, CharSequence[] items,
         boolean[] booleans, @LayoutRes int simpleListItemLayoutRes,
         DialogInterface.OnMultiChoiceClickListener listMultiChoiceClickListener,
         DialogInterface.OnDismissListener onDismissListener, boolean canceledOnTouchOutside) {
-        CommonAlertDialog.Builder customBuilder = new CommonAlertDialog.Builder(context);
-        customBuilder.setTitle(title)
+        Builder customBuilder = new Builder(context);
+        return customBuilder.setTitle(title)
             .setMultiChoiceItems(items, booleans, listMultiChoiceClickListener)
             .setSimpleListItemLayout(simpleListItemLayoutRes)
             .setOnDismissListener(onDismissListener)
             .setCanceledOnTouchOutside(canceledOnTouchOutside);
-        return customBuilder.create();
     }
 
 }
