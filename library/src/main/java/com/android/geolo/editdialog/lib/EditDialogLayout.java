@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,13 +75,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private int mDrawablePadding = 0;
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
+    private int mkeyGravity = Gravity.LEFT | Gravity.START | Gravity.CENTER_VERTICAL;
     private int mValueFormatResID;// 文本格式化资源
     private int mValueGravity = Gravity.RIGHT | Gravity.END | Gravity.CENTER_VERTICAL;
     private int mValueLayoutGravity = Gravity.RIGHT | Gravity.END | Gravity.CENTER_VERTICAL;
     private TextView mKeyTV;
     private TextView mValueTV;
     private LinearLayout mValueLayout;
-    private ViewGroup mDialogLayout;
+    private @LayoutRes int mDialogLayoutRes;
     private Class<? extends EditDialogText> mUserEditTextClass;
     private EditDialogText mUserEditText;
     private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
@@ -96,13 +98,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         mValueLayout = (LinearLayout) findViewById(R.id.edit_dialog_layout_value_layout);
         mKeyTV = (TextView) findViewById(R.id.edit_dialog_layout_key_tv);
         mValueTV = (TextView) findViewById(R.id.edit_dialog_layout_value_tv);
-        mKeyTV.setTextSize(mKeyTextSize);
+        mKeyTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, mKeyTextSize);
         mKeyTV.setTextColor(mKeyTextColor);
         mKeyTV.setHintTextColor(mKeyHintColor);
-        mValueTV.setTextSize(mValueTextSize);
+        mValueTV.setTextSize(TypedValue.COMPLEX_UNIT_PX, mValueTextSize);
         mValueTV.setTextColor(mValueTextColor);
         mValueTV.setHintTextColor(mValueHintColor);
         mKeyTV.setText(mKeyTextStr);
+        mKeyTV.setGravity(mkeyGravity);
         mValueTV.setText(mValueTextStr);
         mValueTV.setHint(mValueHint);
         mValueTV.setGravity(mValueGravity);
@@ -127,10 +130,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             getContext().obtainStyledAttributes(attrs, R.styleable.edit_dialog_layout, defStyleAttr, defStyleRes);
         try {
             mCurrentType = aType.getInt(R.styleable.edit_dialog_layout_geo_style, TYPE_NONE);
-            mKeyTextSize = aType.getDimensionPixelSize(R.styleable.edit_dialog_layout_geo_key_text_size, 15);
+            mKeyTextSize = aType.getDimensionPixelSize(R.styleable.edit_dialog_layout_geo_key_text_size, 30);
             mKeyTextColor = aType.getColor(R.styleable.edit_dialog_layout_geo_key_text_color, 0);
             mKeyHintColor = aType.getColor(R.styleable.edit_dialog_layout_geo_key_hint_color, 0);
-            mValueTextSize = aType.getDimensionPixelSize(R.styleable.edit_dialog_layout_geo_value_text_size, 15);
+            mValueTextSize = aType.getDimensionPixelSize(R.styleable.edit_dialog_layout_geo_value_text_size, 30);
             mValueTextColor = aType.getColor(R.styleable.edit_dialog_layout_geo_value_text_color, 0);
             mValueHintColor = aType.getColor(R.styleable.edit_dialog_layout_geo_value_hint_color, 0);
             mKeyTextStr = aType.getString(R.styleable.edit_dialog_layout_geo_key_txt);
@@ -149,10 +152,11 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             isValueVisibility = aType.getBoolean(R.styleable.edit_dialog_layout_geo_value_visibility, true);
             mDialogEditInputType =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_edit_inputType, EditorInfo.TYPE_CLASS_TEXT);
+            mkeyGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_key_gravity, mkeyGravity);
             mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, mValueGravity);
             mValueLayoutGravity =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_value_layout_gravity, mValueLayoutGravity);
-            setDialogLayout(aType.getResourceId(R.styleable.edit_dialog_layout_geo_dialog_layout, -1));
+            mDialogLayoutRes = aType.getResourceId(R.styleable.edit_dialog_layout_geo_dialog_layout, -1);
             mCanceledOnTouchOutside =
                 aType.getBoolean(R.styleable.edit_dialog_layout_geo_dialog_canceledOnTouchOutside, false);
         } finally {
@@ -203,19 +207,19 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
                 mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener,
                 mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
                 mPositiveButtonListener, mDismissListener, mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDismissListener,
                 mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         }
@@ -278,7 +282,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         hideKeyboard();
                     }
                 }, mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
@@ -292,7 +296,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         hideKeyboard();
                     }
                 }, mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
@@ -309,7 +313,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         hideKeyboard();
                     }
                 }, mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         }
@@ -345,13 +349,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
                 simpleListItemLayoutRes, mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener,
                 mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
                 simpleListItemLayoutRes, listener, mDismissListener, mCanceledOnTouchOutside)
-                .setDialogLayout(mDialogLayout)
+                .setDialogLayout(mDialogLayoutRes)
                 .create()
                 .show();
         }
@@ -371,7 +375,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         }
         CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
             simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, mCanceledOnTouchOutside)
-            .setDialogLayout(mDialogLayout)
+            .setDialogLayout(mDialogLayoutRes)
             .create()
             .show();
     }
@@ -415,7 +419,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                     }
                 }
             }, mCanceledOnTouchOutside)
-            .setDialogLayout(mDialogLayout)
+            .setDialogLayout(mDialogLayoutRes)
             .create()
             .show();
     }
@@ -458,7 +462,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                     }
                 }
             }, mCanceledOnTouchOutside)
-            .setDialogLayout(mDialogLayout)
+            .setDialogLayout(mDialogLayoutRes)
             .create()
             .show();
     }
@@ -601,22 +605,6 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             throw new RuntimeException("当前类型不是 TYPE_LIST_MUTIL_CHOICE_ITEM / TYPE_ARRAY_MUTIL_CHOICE_ITEM ");
         }
         mOnMultiChoiceClickListener = onMultiChoiceClickListener;
-    }
-
-    /** 设置自定义的对话框布局 , 参考{@link com.android.geolo.editdialog.lib.R.layout#common_dialog_alert} , id 必须一致 */
-    public void setDialogLayout(ViewGroup dialogLayout) {
-        mDialogLayout = dialogLayout;
-    }
-
-    /** 设置自定义的对话框布局 , 参考{@link com.android.geolo.editdialog.lib.R.layout#common_dialog_alert} , id 必须一致 */
-    public void setDialogLayout(@LayoutRes int dialogLayoutRes) {
-        if (dialogLayoutRes <= 0) {
-            return;
-        }
-        View view = inflate(getContext(), dialogLayoutRes, null);
-        if (view != null && view instanceof ViewGroup) {
-            mDialogLayout = (ViewGroup) view;
-        }
     }
 
     /*********************************************************************************/

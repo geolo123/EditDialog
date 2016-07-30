@@ -142,7 +142,7 @@
         <com.android.geolo.editdialog.lib.EditDialogLayout
             android:id="@+id/one_listtext"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="#ffffff"
             android:gravity="center_vertical"
@@ -157,9 +157,11 @@
             app:geo_drawableRight="@android:drawable/ic_media_next"
             app:geo_key_text_color="#000000"
             app:geo_key_txt="arrayStyleDialog"
+            app:geo_key_visibility="false"
             app:geo_style="array_item"
             app:geo_value_hint="value"
             app:geo_value_hint_color="#f3f3f3"
+            app:geo_value_layout_gravity="left"
             app:geo_value_text_color="#808080"
             app:geo_value_txt="value" />
 
