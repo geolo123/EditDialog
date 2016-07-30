@@ -73,7 +73,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private boolean isKeyVisibility = true;
     private boolean isValueVisibility = true;
     private int mValueFormatResID;// 文本格式化资源
-    private int mValueGravity = Gravity.TOP | Gravity.START;
+    private int mValueGravity = Gravity.RIGHT | Gravity.END | Gravity.CENTER_VERTICAL;
     private TextView mKeyTV;
     private TextView mValueTV;
     private Class<? extends EditDialogText> mUserEditTextClass;
@@ -141,7 +141,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             isValueVisibility = aType.getBoolean(R.styleable.edit_dialog_layout_geo_value_visibility, true);
             mDialogEditInputType =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_edit_inputType, EditorInfo.TYPE_CLASS_TEXT);
-            mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, -1);
+            mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, mValueGravity);
         } finally {
             aType.recycle();
         }
