@@ -6,14 +6,14 @@
     <TextView
         android:id="@+id/edit_dialog_layout_key_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:maxWidth="100dp"
         android:text="" />
 
     <LinearLayout
         android:id="@+id/edit_dialog_layout_value_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/edit_dialog_layout_key_tv"
         android:gravity="right">
@@ -21,7 +21,7 @@
         <TextView
             android:id="@+id/edit_dialog_layout_value_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="right|center_vertical"
             android:text="" />
     </LinearLayout>
