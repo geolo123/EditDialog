@@ -10,12 +10,19 @@
         android:maxWidth="100dp"
         android:text="" />
 
-    <TextView
-        android:id="@+id/edit_dialog_layout_value_tv"
+    <LinearLayout
+        android:id="@+id/edit_dialog_layout_value_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/edit_dialog_layout_key_tv"
-        android:gravity="right|center_vertical"
-        android:text="" />
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/edit_dialog_layout_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:text="" />
+    </LinearLayout>
 </RelativeLayout>

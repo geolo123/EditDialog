@@ -20,6 +20,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -74,8 +75,10 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private boolean isValueVisibility = true;
     private int mValueFormatResID;// 文本格式化资源
     private int mValueGravity = Gravity.RIGHT | Gravity.END | Gravity.CENTER_VERTICAL;
+    private int mValueLayoutGravity = Gravity.RIGHT | Gravity.END | Gravity.CENTER_VERTICAL;
     private TextView mKeyTV;
     private TextView mValueTV;
+    private LinearLayout mValueLayout;
     private Class<? extends EditDialogText> mUserEditTextClass;
     private EditDialogText mUserEditText;
     private IEditDialogTextInitCallBack mIEditDialogTextInitCallBack;
@@ -87,6 +90,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     private void init() {
         inflate(getContext(), R.layout.edit_dialog_layout, this);
+        mValueLayout = (LinearLayout) findViewById(R.id.edit_dialog_layout_value_layout);
         mKeyTV = (TextView) findViewById(R.id.edit_dialog_layout_key_tv);
         mValueTV = (TextView) findViewById(R.id.edit_dialog_layout_value_tv);
         mKeyTV.setTextSize(mKeyTextSize);
@@ -99,6 +103,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
         mValueTV.setText(mValueTextStr);
         mValueTV.setHint(mValueHint);
         mValueTV.setGravity(mValueGravity);
+        mValueLayout.setGravity(mValueLayoutGravity);
         this.setOnClickListener(this);
         mKeyTV.setCompoundDrawablePadding(mDrawablePadding);
         mValueTV.setCompoundDrawablePadding(mDrawablePadding);
@@ -142,6 +147,8 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             mDialogEditInputType =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_edit_inputType, EditorInfo.TYPE_CLASS_TEXT);
             mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, mValueGravity);
+            mValueLayoutGravity =
+                aType.getInt(R.styleable.edit_dialog_layout_geo_value_layout_gravity, mValueLayoutGravity);
         } finally {
             aType.recycle();
         }
