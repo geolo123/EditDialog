@@ -57,6 +57,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private int mValueTextColor = Color.BLACK;
     private int mValueHintColor = Color.GRAY;
     private int mDialogButtonStyle = STYLE_DIALOG_TWO;
+    private boolean mCanceledOnTouchOutside = false;
     private String mKeyTextStr = "key";
     private String mValueTextStr = "value";
     private String mValueHint = "hint";
@@ -151,8 +152,9 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             mValueGravity = aType.getInt(R.styleable.edit_dialog_layout_geo_value_gravity, mValueGravity);
             mValueLayoutGravity =
                 aType.getInt(R.styleable.edit_dialog_layout_geo_value_layout_gravity, mValueLayoutGravity);
-            int dialogLatoutRes = aType.getInt(R.styleable.edit_dialog_layout_geo_dialog_layout, -1);
-            setDialogLayout(dialogLatoutRes);
+            setDialogLayout(aType.getResourceId(R.styleable.edit_dialog_layout_geo_dialog_layout, -1));
+            mCanceledOnTouchOutside =
+                aType.getBoolean(R.styleable.edit_dialog_layout_geo_dialog_canceledOnTouchOutside, false);
         } finally {
             aType.recycle();
         }
@@ -199,19 +201,20 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
     private void showTextDialog() {
         if (mDialogButtonStyle == STYLE_DIALOG_TWO) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
-                mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener, false)
+                mPositiveButtonListener, mDialogBtnNo, mNegativeButtonListener, mDismissListener,
+                mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDialogBtnOk,
-                mPositiveButtonListener, mDismissListener, false)
+                mPositiveButtonListener, mDismissListener, mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogMsg, mDismissListener,
-                false)
+                mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
@@ -274,7 +277,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false)
+                }, mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
@@ -288,7 +291,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false)
+                }, mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
@@ -305,7 +308,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         }
                         hideKeyboard();
                     }
-                }, false)
+                }, mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
@@ -340,13 +343,14 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
         } else if (mDialogButtonStyle == STYLE_DIALOG_SINGLE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
-                simpleListItemLayoutRes, mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener, false)
+                simpleListItemLayoutRes, mDialogBtnOk, mPositiveButtonListener, listener, mDismissListener,
+                mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
         } else if (mDialogButtonStyle == STYLE_DIALOG_NONE) {
             CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
-                simpleListItemLayoutRes, listener, mDismissListener, false)
+                simpleListItemLayoutRes, listener, mDismissListener, mCanceledOnTouchOutside)
                 .setDialogLayout(mDialogLayout)
                 .create()
                 .show();
@@ -366,7 +370,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             return;
         }
         CustomAlertDialogUtils.createCustomAlertDialog(getContext(), mDialogTitle, mDialogArray,
-            simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, false)
+            simpleListItemLayoutRes, mOnMultiChoiceClickListener, mDismissListener, mCanceledOnTouchOutside)
             .setDialogLayout(mDialogLayout)
             .create()
             .show();
@@ -410,7 +414,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         mDismissListener.onDismiss(dialog);
                     }
                 }
-            }, true)
+            }, mCanceledOnTouchOutside)
             .setDialogLayout(mDialogLayout)
             .create()
             .show();
@@ -453,7 +457,7 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
                         mDismissListener.onDismiss(dialog);
                     }
                 }
-            }, true)
+            }, mCanceledOnTouchOutside)
             .setDialogLayout(mDialogLayout)
             .create()
             .show();
@@ -606,7 +610,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
 
     /** 设置自定义的对话框布局 , 参考{@link com.android.geolo.editdialog.lib.R.layout#common_dialog_alert} , id 必须一致 */
     public void setDialogLayout(@LayoutRes int dialogLayoutRes) {
-        mDialogLayout = (ViewGroup) inflate(getContext(), dialogLayoutRes, null);
+        if (dialogLayoutRes <= 0) {
+            return;
+        }
+        View view = inflate(getContext(), dialogLayoutRes, null);
+        if (view != null && view instanceof ViewGroup) {
+            mDialogLayout = (ViewGroup) view;
+        }
     }
 
     /*********************************************************************************/

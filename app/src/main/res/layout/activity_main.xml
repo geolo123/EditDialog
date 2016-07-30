@@ -138,6 +138,31 @@
             app:geo_value_hint_color="#f3f3f3"
             app:geo_value_text_color="#808080"
             app:geo_value_txt="value" />
+
+        <com.android.geolo.editdialog.lib.EditDialogLayout
+            android:id="@+id/one_listtext"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_margin="10dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:geo_dialog_array="@array/array_string"
+            app:geo_dialog_button_style="none"
+            app:geo_dialog_layout="@layout/common_dialog_alert"
+            app:geo_dialog_msg="this is message content "
+            app:geo_dialog_title="this is title"
+            app:geo_drawablePadding="5dp"
+            app:geo_drawableRight="@android:drawable/ic_media_next"
+            app:geo_key_text_color="#000000"
+            app:geo_key_txt="arrayStyleDialog"
+            app:geo_style="array_item"
+            app:geo_value_hint="value"
+            app:geo_value_hint_color="#f3f3f3"
+            app:geo_value_text_color="#808080"
+            app:geo_value_txt="value" />
+
     </LinearLayout>
 
 </ScrollView>
