@@ -16,6 +16,7 @@ import android.os.Build;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -248,11 +249,13 @@ public class EditDialogLayout extends LinearLayout implements View.OnClickListen
             }
         } else {
             mUserEditText = new EditDialogText(getContext());
+            mUserEditText.setSingleLine(false);
+            mUserEditText.setInputType(mDialogEditInputType | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         }
         if (mUserEditText == null) {
             mUserEditText = new EditDialogText(getContext());
+            mUserEditText.setInputType(mDialogEditInputType);
         }
-        mUserEditText.setInputType(mDialogEditInputType);
         if (mIEditDialogTextInitCallBack != null) {
             mIEditDialogTextInitCallBack.onEditTextInit(mUserEditText);
         }
